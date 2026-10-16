@@ -1,0 +1,6 @@
+# Robots.txt for PT Garuda Mitra Equipment
+User-agent: *
+Allow: /
+
+# Sitemap Location for Googlebot and Search Engines
+Sitemap: https://garudamitraequi.co.id/sitemap.xml
