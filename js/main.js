@@ -1,8 +1,6 @@
 /**
  * PT Garuda Mitra Equipment - Main Interactive JavaScript Application
- * Zinc Dark Theme & AOS Animation Support
- * All WhatsApp routing to +62 851-6817-4679 with message:
- * "kak aku udah  liat porto web nya aku mau order web disini dong"
+ * Industrial Zinc Dark Theme & AOS Animation Support
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -256,17 +254,18 @@ function openEquipmentModal(id) {
   if (featuresContainer && item.features) {
     featuresContainer.innerHTML = item.features.map(f => `
       <li class="flex items-start gap-2.5 text-sm text-zinc-700">
-        <svg class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        <svg class="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
         <span>${f}</span>
       </li>
     `).join("");
   }
 
-  // Set action button to direct WhatsApp with requested text
+  // Set action button to direct WhatsApp with unit details
   const orderBtn = document.getElementById("modal-order-btn");
   if (orderBtn) {
     orderBtn.onclick = () => {
-      const waUrl = `https://wa.me/${COMPANY_INFO.whatsappRaw}?text=${encodeURIComponent(COMPANY_INFO.defaultWaMessage)}`;
+      const modalMessage = `Halo Garuda Mitra Equipment, saya tertarik menyewa unit ${item.name} (${item.capacity}). Mohon info ketersediaan armada dan penawaran harga resminya. Terima kasih.`;
+      const waUrl = `https://wa.me/${COMPANY_INFO.whatsappRaw}?text=${encodeURIComponent(modalMessage)}`;
       window.open(waUrl, "_blank");
     };
   }
@@ -332,7 +331,7 @@ function initRentalCalculator() {
     // Update thumbnail & info
     if (unitThumb) unitThumb.src = item.image;
     if (unitNameDisplay) unitNameDisplay.textContent = item.name;
-    if (unitSpecsDisplay) unitSpecsDisplay.textContent = `Kapasitas: ${item.capacity} • ${item.category}`;
+    if (unitSpecsDisplay) unitSpecsDisplay.textContent = `Kapasitas: ${item.capacity} | Kategori ${item.category}`;
 
     let baseRate = 0;
     let rateExplanation = "";
@@ -351,7 +350,7 @@ function initRentalCalculator() {
     const operatorTotal = withOperator ? (operatorFeePerDay * currentDurationDays) : 0;
 
     const withDelivery = deliveryCheckbox ? deliveryCheckbox.checked : false;
-    const deliveryEstimated = withDelivery ? 2500000 : 0; // Flat dummy mobilization estimate in Central Java
+    const deliveryEstimated = withDelivery ? 2500000 : 0; // Standard mobilization estimate in Central Java
 
     const grandTotal = baseRate + operatorTotal + deliveryEstimated;
 
@@ -401,10 +400,25 @@ function initRentalCalculator() {
     });
   });
 
-  // Direct WhatsApp dispatch from calculator using requested text
+  // Direct WhatsApp dispatch from calculator with detailed calculation
   if (submitCalcBtn) {
     submitCalcBtn.addEventListener("click", () => {
-      const waUrl = `https://wa.me/${COMPANY_INFO.whatsappRaw}?text=${encodeURIComponent(COMPANY_INFO.defaultWaMessage)}`;
+      const selectedId = unitSelect.value;
+      const item = EQUIPMENT_CATALOG.find(x => x.id === selectedId) || EQUIPMENT_CATALOG[0];
+      const withOperator = operatorCheckbox ? operatorCheckbox.checked : false;
+      const withDelivery = deliveryCheckbox ? deliveryCheckbox.checked : false;
+      const durationLabel = currentDurationDays === 30 ? "1 Bulan" : `${currentDurationDays} Hari`;
+      const grandTotalText = totalDisplay.textContent;
+
+      const message = `Halo Garuda Mitra Equipment, saya ingin konsultasi sewa alat berat berdasarkan rincian estimasi berikut:\n\n` +
+        `Unit: ${item.name} (${item.capacity})\n` +
+        `Durasi: ${durationLabel}\n` +
+        `Operator: ${withOperator ? "Ya (Sertakan Operator)" : "Tanpa Operator (Unit Saja)"}\n` +
+        `Mobilisasi: ${withDelivery ? "Ya (Termasuk Self-Loader)" : "Mandiri"}\n` +
+        `Estimasi Biaya: ${grandTotalText}\n\n` +
+        `Mohon info ketersediaan armada dan penawaran resmi untuk proyek saya. Terima kasih.`;
+
+      const waUrl = `https://wa.me/${COMPANY_INFO.whatsappRaw}?text=${encodeURIComponent(message)}`;
       window.open(waUrl, "_blank");
     });
   }
@@ -435,7 +449,7 @@ function initProjectsPortfolio() {
           </div>
           
           <div class="absolute bottom-3 left-3 right-3 text-white">
-            <span class="text-xs font-medium text-amber-300 block mb-0.5">${p.location} • ${p.year}</span>
+            <span class="text-xs font-medium text-amber-300 block mb-0.5">${p.location} | ${p.year}</span>
             <h3 class="text-base font-bold leading-snug drop-shadow-sm">${p.name}</h3>
           </div>
         </div>
@@ -480,16 +494,15 @@ function initTimeline() {
       <!-- Vertical line connector -->
       ${index !== COMPANY_TIMELINE.length - 1 ? '<div class="absolute top-7 left-4 w-0.5 h-full -ml-[1px] bg-zinc-200"></div>' : ''}
       
-      <!-- Year Circle -->
-      <div class="timeline-dot relative z-10 w-8 h-8 rounded-full bg-amber-500 text-zinc-950 flex items-center justify-center font-black text-xs shadow-sm flex-shrink-0">
+      <!-- Year Badge -->
+      <div class="relative z-10 w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700 text-amber-400 flex items-center justify-center font-bold text-xs shadow-sm flex-shrink-0">
         ${item.year.slice(-2)}
       </div>
 
       <!-- Content -->
       <div class="bg-white p-4 rounded-xl border border-zinc-200 shadow-sm flex-1 hover:border-amber-300 transition-colors">
         <div class="flex items-center gap-2 mb-1">
-          <span class="text-xs font-black text-amber-600">${item.year}</span>
-          <span class="text-zinc-300">•</span>
+          <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200/60 text-xs font-bold">${item.year}</span>
           <h4 class="font-bold text-zinc-900 text-sm">${item.title}</h4>
         </div>
         <p class="text-zinc-600 text-xs leading-relaxed">${item.desc}</p>
@@ -594,10 +607,28 @@ function initConsultationForm() {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const name = document.getElementById("form-name")?.value || "";
+    const company = document.getElementById("form-company")?.value || "";
+    const phone = document.getElementById("form-phone")?.value || "";
+    const equipment = document.getElementById("form-equipment")?.value || "";
+    const location = document.getElementById("form-location")?.value || "";
+    const duration = document.getElementById("form-duration")?.value || "";
+    const messageText = document.getElementById("form-message")?.value || "";
+
+    const message = `Halo Garuda Mitra Equipment, saya ingin konsultasi sewa alat berat:\n\n` +
+      `Nama: ${name}\n` +
+      (company ? `Perusahaan: ${company}\n` : '') +
+      `Nomor Kontak: ${phone}\n` +
+      `Jenis Alat: ${equipment}\n` +
+      `Lokasi Proyek: ${location}\n` +
+      `Durasi Sewa: ${duration}\n` +
+      (messageText ? `Keterangan: ${messageText}\n` : '') +
+      `\nMohon informasi ketersediaan unit dan tindak lanjut penawarannya. Terima kasih.`;
+
     showNotificationToast("Mengarahkan ke WhatsApp...");
 
     setTimeout(() => {
-      const waUrl = `https://wa.me/${COMPANY_INFO.whatsappRaw}?text=${encodeURIComponent(COMPANY_INFO.defaultWaMessage)}`;
+      const waUrl = `https://wa.me/${COMPANY_INFO.whatsappRaw}?text=${encodeURIComponent(message)}`;
       window.open(waUrl, "_blank");
     }, 400);
   });

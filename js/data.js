@@ -13,11 +13,11 @@ const COMPANY_INFO = {
   phone: "+62 851-6817-4679",
   whatsapp: "+62 851-6817-4679",
   whatsappRaw: "6285168174679",
-  defaultWaMessage: "kak aku udah  liat porto web nya aku mau order web disini dong",
+  defaultWaMessage: "Halo Garuda Mitra Equipment, saya ingin konsultasi mengenai sewa alat berat untuk kebutuhan proyek.",
   email: "info@garudamitraequi.co.id",
   hours: {
-    weekday: "Senin – Jumat, 08.00 – 17.00 WIB",
-    saturday: "Sabtu, 08.00 – 13.00 WIB",
+    weekday: "Senin - Jumat, 08.00 - 17.00 WIB",
+    saturday: "Sabtu, 08.00 - 13.00 WIB",
     emergency: "24/7 Dukungan Operasional Darurat"
   },
   serviceAreas: [
@@ -63,7 +63,7 @@ const EQUIPMENT_CATALOG = [
     id: "bulldozer-d65",
     name: "Bulldozer D65",
     category: "Bulldozer",
-    capacity: "16 – 20 Ton",
+    capacity: "16 - 20 Ton",
     dailyPrice: 4200000,
     monthlyPrice: 78000000,
     dailyPriceFormatted: "Rp4.200.000",
@@ -369,21 +369,21 @@ const PROJECTS_PORTFOLIO = [
 const TESTIMONIALS = [
   {
     name: "Andi Pratama",
-    title: "Project Manager — PT Karya Infrastruktur",
+    title: "Project Manager, PT Karya Infrastruktur",
     image: "assets/images/client-andi.jpg",
     quote: "Unit yang dikirim sesuai dengan kebutuhan proyek dan kondisi alat sangat baik. Tim Garuda Mitra juga responsif ketika kami membutuhkan bantuan.",
     rating: 5
   },
   {
     name: "Rina Maharani",
-    title: "Procurement — PT Nusantara Properti",
+    title: "Procurement Manager, PT Nusantara Properti",
     image: "assets/images/client-rina.jpg",
     quote: "Proses penyewaan cukup mudah dan komunikasinya jelas. Sangat membantu untuk kebutuhan proyek dengan waktu yang cukup padat.",
     rating: 5
   },
   {
     name: "Budi Santoso",
-    title: "Site Manager — PT Bina Konstruksi",
+    title: "Site Manager, PT Bina Konstruksi",
     quote: "Kami sudah beberapa kali menggunakan unit mereka. Pelayanannya konsisten dan unit selalu mendapatkan maintenance.",
     image: "assets/images/client-budi.jpg",
     rating: 5
