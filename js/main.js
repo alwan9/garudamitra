@@ -625,7 +625,7 @@ function initConsultationForm() {
       (messageText ? `Keterangan: ${messageText}\n` : '') +
       `\nMohon informasi ketersediaan unit dan tindak lanjut penawarannya. Terima kasih.`;
 
-    showNotificationToast("Mengarahkan ke WhatsApp...");
+    showNotificationToast("Mengarahkan ke WhatsApp");
 
     setTimeout(() => {
       const waUrl = `https://wa.me/${COMPANY_INFO.whatsappRaw}?text=${encodeURIComponent(message)}`;
